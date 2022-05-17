@@ -1,11 +1,24 @@
 import React from 'react';
-import { Text }from 'react-native';
+import Login from './src/pages/Login'
+import { DefaultTheme ,Provider as PaperProvider } from 'react-native-paper';
 
 const App = () => {
+
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#E50914',
+      background: '#3C3C3C',
+      placeholder: '#ffffff',
+      text: '#ffffff',
+    }
+  }
+
   return(
-    <>
-    <Text>Hello word</Text>
-    </>
+    <PaperProvider theme={theme}> 
+    <Login/>
+ </PaperProvider>
   );
 
 };

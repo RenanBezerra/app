@@ -1,23 +1,7 @@
-import { StyleSheet } from 'react-native'
+import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1, 
-        backgroundColor: '#000',
-    },
-    menuHeader:{
-        width:'100%',
-        height: 38,
-        flexDirection:'row',
-        justifyContent:'space-evenly',
-    },
-    flatListContainer:{
-        width: '100%',
-        height:100,
-        marginTop: 10,
-        marginBottom: 50,
-       
-    }, oval:{
+    oval:{
         backgroundColor:'#E50914',
         padding:2.5,
         width: 90,
@@ -51,9 +35,6 @@ const styles = StyleSheet.create({
         zIndex:9,
         bottom:0
     }
-    
-    
-   
-})
+});
 
-export default styles; 
+export default styles;

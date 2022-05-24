@@ -1,18 +1,20 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import {View,ScrollView, TouchableOpacity, FlatList, Image } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import styles from './styles';
-import {Button} from 'react-native-paper';
+import {Button,Title} from 'react-native-paper';
 
 import Header from '../../components/Header';
 import Hero from '../../components/Hero';
 import ButtonVertical from '../../components/ButtonVertical';
 
+import LinearGradient from 'react-native-linear-gradient';
+import Previas from '../../components/Previas';
 
 const Home = () => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Header/>
             <Hero/>
             <View style={styles.menuHeader}>
@@ -35,7 +37,12 @@ const Home = () => {
                 </ButtonVertical>
                 
             </View>
-        </View>
+            <View style={styles.previaContainer}>
+                    <Title style={styles.previaTitle}>Prévias</Title>
+                    <Previas/>
+
+                </View>
+        </ScrollView>
     );
 };
 

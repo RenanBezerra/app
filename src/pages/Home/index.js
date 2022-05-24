@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,ScrollView, TouchableOpacity, FlatList, Image } from 'react-native';
+import {View,ScrollView} from 'react-native';
 
 
 import styles from './styles';
@@ -9,8 +9,8 @@ import Header from '../../components/Header';
 import Hero from '../../components/Hero';
 import ButtonVertical from '../../components/ButtonVertical';
 
-import LinearGradient from 'react-native-linear-gradient';
 import Previas from '../../components/Previas';
+import Secao from '../../components/Secao';
 
 const Home = () => {
     return (
@@ -42,6 +42,12 @@ const Home = () => {
                     <Previas/>
 
                 </View>
+
+                {[1,2,3,4].map((secao,index) => (
+                    <Secao key={index} />
+
+                ))}
+                
         </ScrollView>
     );
 };

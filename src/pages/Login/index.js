@@ -4,12 +4,12 @@ import { Button, TextInput }from 'react-native-paper';
 
 import styles from './styles';
 
-const Login = () =>{
+const Login = ({ navigation }) => {
 
     const [credenciais, setCredenciais] =useState({
         email:'',
         senha: ''
-    })
+    });
 
     return (
 
@@ -34,7 +34,7 @@ const Login = () =>{
                 <Button  
                  style={styles.marginBotton}
                  mode="contained" 
-                 onPress={() => console.log('Pressed')}>
+                 onPress={() => {navigation.navigate('Home');}}>
                         Entrar
                 </Button>
 

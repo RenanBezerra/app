@@ -3,7 +3,7 @@ import { Image, View, Text, ActivityIndicator } from 'react-native';
 import { Button, TextInput }from 'react-native-paper';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../../services/api'
+import api from '../../services/api';
 
 import styles from './styles';
 
@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
         }else {
             setLogged(2);
         }
-    }
+    };
 
     const login = async () => {
         try {
@@ -44,19 +44,19 @@ const Login = ({ navigation }) => {
         } catch (error) {
             alert(error.message)
         }
-    }
+    };
 
     useEffect(() => {
         checkLogin();
-    },[])
+    },[]);
 
     return (
 
         <View style={styles.bgDark}>
             <Image style={styles.logo} source={require('../../assets/logo.png')}/>
 
-            {logged == 0 && <ActivityIndicator color="#fff" size="large"/>}
-           {logged == 2 && <View>
+            {logged === 0 && <ActivityIndicator color="#fff" size="large"/>}
+           {logged === 2 && <View>
 
                 <TextInput style={styles.marginBotton}
                     mode="flat"
@@ -91,7 +91,7 @@ const Login = ({ navigation }) => {
                     O acesso está protegido pelo Goole reCAPTCHA para
                     garantir que você não é um robo. Saiba mais.
                 </Text>
-            </View> }
+            </View>}
         </View>
     )
 } 

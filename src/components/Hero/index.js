@@ -4,16 +4,16 @@ import {Text, ImageBackground,View,Image} from 'react-native';
 
 import styles from './styles';
 
-const Hero = () => {
+const Hero = ({ filme }) => {
     return (
         <ImageBackground 
         style={styles.hero}
-        source={{ uri : 'https://i.imgur.com/EJyDFeY.png'}}>
+        source={{ uri : filme.capa}}>
        
             <Image 
             style={styles.logo}
             resizeMode='contain'
-            source={{ uri: 'https://i.imgur.com/4xN7wB8.png'}}/>
+            source={{ uri: filme.logoMobile ? filme.logoMobile : filme.logo}}/>
 
          <View style={styles.containerTop10}>
             <Image 

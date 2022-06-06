@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
     },
     temporadaName:{
         color: '#fff'
-    }
+    },
+    buttonBack:{
+        padding:20,
+    },
 
 
 });

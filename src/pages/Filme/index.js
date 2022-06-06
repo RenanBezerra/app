@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
 import {ScrollView, ImageBackground, View, TouchableOpacity, Text,FlatList} from 'react-native';
 import { Title,Button, Paragraph, Caption } from 'react-native-paper';
@@ -8,38 +8,82 @@ import { SinglePickerMaterialDialog  } from 'react-native-material-dialog';
 import styles from './styles';
 import Secao from '../../components/Secao'
 import Episodeo from '../../components/Episodeo'
-
+import api from '../../services/api'
 
 
 import ButtonVertical from '../../components/ButtonVertical'
 
-const Filme = () => {
+const Filme = ({route, navigation}) => {
 
-    const [tipo] = useState('serie')
+    const {filme, secao} = route.params;
     const [visible, setVisible] = useState(false)
-    const [temporada, setTemporada] = useState({value:1, label: 'Temporada 1'})
+    const [temporada, setTemporada] = useState({
+        value:filme.temporadas[0]?._id,
+        label:filme.temporadas[0]?.titulo
+    });
+    const [episodeos, setEpisodeos] = useState([]);
+
+    const getEpisodeos = async (temporada_id) => {
+
+        try {
+            const response = await api.get(`/episodeo/temporada/${temporada_id}`);
+            const res = response.data;
+
+            if (res.error){
+                alert(res.message);
+                return false;
+            }
+            //console.log(res);
+            setEpisodeos(res.episodeos);
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
+    useEffect(() => {
+        if(filme.tipo === "serie"){
+            getEpisodeos(temporada.value);
+        }
+    }, []);
+
 
     return (
         <>
         <SinglePickerMaterialDialog
-            title={'Serie - Temporadas'}
-            items={[{ value:1, label: 'Temporada 1'},
-                    { value:2, label: 'Temporada 2'},
-                    { value:3, label: 'Temporada 3'},]}
+            title={`${filme.titulo} - Temporadas`}
+            items={filme?.temporadas.map((temporada) => ({
+                value: temporada._id ,
+                label: temporada.titulo,
+               }))}
+            onCancel={() => {
+                setVisible(false);
+            }}
             visible={visible}
             selectedItem={temporada}
             onOk={(result) => {
-               setVisible(false);
-               setTemporada(result.selectedItem);
+                getEpisodeos(result.selectedItem.value);
+                setVisible(false);
+                setTemporada(result.selectedItem);
             }}
             />
         <ScrollView style={styles.container}>
             <ImageBackground 
-                source={{ uri: 'https://i.imgur.com/EJyDFeY.png'}}
+                source={{ uri: filme.capa}}
                 style={styles.hero}
-                />
+                >
+                    <TouchableOpacity 
+                    onPress={() => {
+                        navigation.goBack();
+                    }}
+                    style={styles.buttonBack}>
+                        <Icon
+                        name="arrow-left"
+                        color="#fff"
+                        size={25}/>
+                    </TouchableOpacity>
+                </ImageBackground>
             <View style={styles.containerPadding}>
-                <Title>Nome do filme</Title>
+                <Title>{filme.titulo}</Title>
                 <Button
                     style={styles.buttonPlay}
                     icon="play"
@@ -49,21 +93,20 @@ const Filme = () => {
                     Assistir
                 </Button>
                 <Paragraph>
-                    Pregadores Profanos Autoridades Corruptas, Amantes Assassinos. Numa
-                    cidade cheia de pecadores um jovem busca justiça
+                {filme.descricao}
                 </Paragraph>
                 <Caption style={styles.captionInfos}>
                     Elenco:{' '}
                     <Caption style={styles.captionWhite}> 
-                        Renan Bezerra, Thaila Abrantes, Carlos Eduardo, Sandra Borges
+                    {filme.elenco.join(', ')}
                     </Caption>{' '}
                     Generos: {' '}
                     <Caption style={styles.captionWhite}> 
-                    Ação, Aventura, Dramático. Cenas e momentos  
+                    {filme.generos.join(', ')}  
                     </Caption>
                     {' '}Violentos: {' '} 
                     <Caption style={styles.captionWhite}>
-                    Violentos
+                    {filme.cenas_momentos.join(', ')}
                     </Caption>
                 </Caption>
                 <View style={styles.menu}>
@@ -72,21 +115,21 @@ const Filme = () => {
                     <ButtonVertical icon="send" text="Compartilhe"/>
                     <ButtonVertical icon="download" text="Baixar"/>
                 </View>
-                {tipo === "serie" && (
+                {filme.tipo === "serie" && (
                 <>
                     <TouchableOpacity onPress={() => setVisible(true)} style={styles.buttonTemporada}>
                         <Text style={styles.temporadaName}>{temporada.label}</Text>
                         <Icon name="chevron-down" color="#fff" size={20}/>
                     </TouchableOpacity>
                         <FlatList
-                            data={[1,2,3,4]}
-                            renderItem={({item, index}) => <Episodeo key={index}/>}
+                            data={episodeos}
+                            renderItem={({item, index}) => <Episodeo episodeo={item} index={index} key={index}/>}
                         />
                 </>
             )}
                 
             </View>
-            {tipo === "filme" && <Secao hasTopBorder/>}
+            {filme.tipo === "filme" && <Secao secao={secao} hasTopBorder/>}
             
         </ScrollView>
         </>

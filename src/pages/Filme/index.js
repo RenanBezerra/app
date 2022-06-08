@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 
-import {ScrollView, ImageBackground, View, TouchableOpacity, Text,FlatList} from 'react-native';
+import {ScrollView, ImageBackground, View, TouchableOpacity, Text,FlatList,SafeAreaView} from 'react-native';
 import { Title,Button, Paragraph, Caption } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { SinglePickerMaterialDialog  } from 'react-native-material-dialog';
@@ -71,16 +71,18 @@ const Filme = ({route, navigation}) => {
                 source={{ uri: filme.capa}}
                 style={styles.hero}
                 >
-                    <TouchableOpacity 
-                    onPress={() => {
-                        navigation.goBack();
-                    }}
-                    style={styles.buttonBack}>
-                        <Icon
-                        name="arrow-left"
-                        color="#fff"
-                        size={25}/>
-                    </TouchableOpacity>
+                    <SafeAreaView>
+                        <TouchableOpacity 
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
+                        style={styles.buttonBack}>
+                            <Icon
+                            name="arrow-left"
+                            color="#fff"
+                            size={25}/>
+                        </TouchableOpacity>
+                    </SafeAreaView>
                 </ImageBackground>
             <View style={styles.containerPadding}>
                 <Title>{filme.titulo}</Title>

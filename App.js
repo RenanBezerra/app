@@ -18,7 +18,7 @@ const App = () => {
 
   return(
     <PaperProvider theme={theme}> 
-    <StatusBar backgroundColor="#000"/>
+    <StatusBar barStyle="light-content" backgroundColor="#000"/>
     <Routes/>
  </PaperProvider>
   );

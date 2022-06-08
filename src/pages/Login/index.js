@@ -60,6 +60,8 @@ const Login = ({ navigation }) => {
 
                 <TextInput style={styles.marginBotton}
                     mode="flat"
+                    autoCapitalize="none"
+                    textContentType="emailAddress"
                     label="Email ou numero de telefone"
                     value={credenciais.email}
                     onChangeText={(text) => setCredenciais({...credenciais, email:text})}
